@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-
+from django.views.generic import (TemplateView,ListView,DeleteView,
+                                    CreateView,UpdateView,DetailView,RedirectView
+                                    )
 # Create your views here.
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+class IndexView(TemplateView):
+    template_name = "base.html"
