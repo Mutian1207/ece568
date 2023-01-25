@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #add my new applications
     'basicapp',
+    'bootstrap4',
     
     
 ]
