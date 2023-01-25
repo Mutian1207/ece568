@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView,LogoutView
 from .models import Users,Rides,Sharers
-from forms import UserRegisterForm
+from .forms import UserRegisterForm
 # Create your views here.
 class IndexView(TemplateView):
     template_name = "homepage.html"
