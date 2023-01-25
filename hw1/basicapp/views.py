@@ -15,9 +15,9 @@ class IndexView(TemplateView):
 class RegisterView(CreateView):   
     template_name = "register.html"
     form_class = UserRegisterForm
-
+    
     def get_success_url(self,request):
-        return rediect(reverse('basicapp:homepage'))
+        return reverse('basicapp:homepage')
         
 
 #login view
@@ -25,8 +25,9 @@ class UserLogin(LoginView):
     template_name = "login.html"
 #logout view
 class UserLogout(LogoutView):
-    pass
-
+    
+    def get_success_url(self,request):
+        return reverse('basicapp:homepage')
 
 
 
