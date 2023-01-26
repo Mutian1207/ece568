@@ -7,8 +7,8 @@ class UserRegisterForm(forms.ModelForm):
 
     class Meta():
         model = Users
-        fields = ('username','email','password')
-        widgets ={'username':forms.TextInput(),'email': forms.EmailInput(),
+        fields = ('email','password')
+        widgets ={'email': forms.EmailInput(),
                     'password':forms.PasswordInput(),}
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)

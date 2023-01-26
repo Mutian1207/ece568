@@ -7,14 +7,16 @@ class Users(AbstractUser):
         ('mp','mpv'),
         ('sd','sedan'),
         )
-    #user_id = models.EmailField(primary_key=True)
+    username = None
+    email = models.EmailField(unique = True)
     #user_pwd = models.CharField(max_length=30)
     is_driver = models.BooleanField(null=True, default=False)
     vehic_type = models.CharField(max_length=2, null=True, choices=VEHICLE_TYPE)
     lice_plate_number = models.CharField(max_length=10, null=True)
     max_pass_num = models.PositiveSmallIntegerField(null=True)
     other_reg = models.TextField(max_length=300, null=True)
-
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 class Rides(models.Model):
     STATUS = (
         ('op','open'),
