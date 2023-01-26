@@ -23,11 +23,11 @@ class RegisterView(CreateView):
 #login view
 class UserLogin(LoginView):
     template_name = "login.html"
+    next_page = '/'
+    
 #logout view
 class UserLogout(LogoutView):
-    
-    def get_success_url(self,request):
-        return reverse('basicapp:homepage')
+    next_page = '/'
 
 
 
