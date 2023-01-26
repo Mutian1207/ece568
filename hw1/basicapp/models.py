@@ -9,7 +9,7 @@ class Users(models.Model):
         )
     user_id = models.EmailField(primary_key=True)
     user_pwd = models.CharField(max_length=30)
-    is_driver = models.BooleanField()
+    is_driver = models.BooleanField(null=True, default=False)
     vehic_type = models.CharField(max_length=2, null=True, choices=VEHICLE_TYPE)
     lice_plate_number = models.CharField(max_length=10, null=True)
     max_pass_num = models.PositiveSmallIntegerField(null=True)
