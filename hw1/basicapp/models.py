@@ -1,14 +1,14 @@
 from django.db import models
-
+from django.contrib.auth.models import AbstractUser
 # Create your models here.
-class Users(models.Model):
+class Users(AbstractUser):
     VEHICLE_TYPE = (
         ('su','suv'),
         ('mp','mpv'),
         ('sd','sedan'),
         )
-    user_id = models.EmailField(primary_key=True)
-    user_pwd = models.CharField(max_length=30)
+    #user_id = models.EmailField(primary_key=True)
+    #user_pwd = models.CharField(max_length=30)
     is_driver = models.BooleanField(null=True, default=False)
     vehic_type = models.CharField(max_length=2, null=True, choices=VEHICLE_TYPE)
     lice_plate_number = models.CharField(max_length=10, null=True)

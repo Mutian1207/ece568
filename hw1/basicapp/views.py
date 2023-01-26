@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView,LogoutView
 from .models import Users,Rides,Sharers
 from .forms import UserRegisterForm
+from django.urls import reverse_lazy
 # Create your views here.
 class IndexView(TemplateView):
     template_name = "homepage.html"
@@ -15,9 +16,8 @@ class IndexView(TemplateView):
 class RegisterView(CreateView):   
     template_name = "register.html"
     form_class = UserRegisterForm
-    
-    def get_success_url(self,request):
-        return reverse('basicapp:homepage')
+    success_url = reverse_lazy("basicapp:homepage")
+  
         
 
 #login view
