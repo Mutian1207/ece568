@@ -1,0 +1,30 @@
+{%extends "./base.html"%}
+{%load bootstrap4%}
+{%block title%}
+Register Account
+{%endblock%}
+
+{%block body_block%}
+
+<p><br></p>
+<div style="width: 20rem;">
+    {% for object in object_list %}
+    <div class="card-body">
+        <h5 class="card-title mb-2">Ride:{{ object.ride_id }}</h5>
+        <p class="card-text">
+            <span class="badge bg-info text-white">{{ object.arr_date_time }}</span>
+        </p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">partynumber:{{ object.party_num }}</li>
+        <li class="list-group-item">destination:{{ object.dest_addr }}</li>
+        <li class="list-group-item">arrivaltime:{{ object.arr_date_time }}</li>
+    </ul>
+    <div class="card-body">
+        <a href="{% url 'basicapp:ride-edits' rides.id %}" class="card-link">edit</a>
+        <a href="{% url 'basicapp:ride-details' rides.id %}" class="card-link">detail</a>
+        <!-- <a class="float-end" href="{% url 'basicapp:ride-views' rides.id %}">返回列表</a> -->
+    </div>
+    {% endfor %}
+</div>
+{%endblock%}

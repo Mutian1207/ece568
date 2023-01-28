@@ -10,6 +10,7 @@ urlpatterns = [
     path('logout/',views.UserLogoutView.as_view(),name = "logout"),
     path('success/',views.OrderSuccessView.as_view(),name = "ordersuccess"),
     re_path(r'^/(?P<pk>\d+)/$',views.PersonalInfoView.as_view(),name = "personalinfo"),
+    path('rides/',views.UserRides.as_view(),name = "rides"),
     
 
 ]

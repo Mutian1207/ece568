@@ -13,7 +13,8 @@ class UserRegisterForm(forms.ModelForm):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.fields['email'].label = "Email"
-        self.fields['password'].label = "Password"    
+        self.fields['password'].label = "Password"
+            
 class CreateOrderForm(forms.ModelForm):
     class Meta():
         model = Rides
