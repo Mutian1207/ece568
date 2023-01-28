@@ -13,7 +13,11 @@ class UserRegisterForm(UserCreationForm):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.fields['email'].label = "Email"
+
         # self.fields['password'].label = "Password"    
+
+            
+
 class CreateOrderForm(forms.ModelForm):
     class Meta:
         model = Rides
@@ -28,4 +32,3 @@ class CreateOrderForm(forms.ModelForm):
         self.fields['party_num'].label = "Party number"
         self.fields['arr_date_time'].label = "Arrival time"
         self.fields['other_reg'].label = "Other requirements"   
-

@@ -11,5 +11,8 @@ urlpatterns = [
     path('success/',views.OrderSuccessView.as_view(),name = "ordersuccess"),
     re_path(r'^info/(?P<pk>\d+)/$',views.PersonalInfoView.as_view(),name = "personalinfo"),
     re_path(r'^updateinfo/(?P<pk>\d+)/$',views.UpdateInfoView.as_view(),name = "updateinfo"),
+    re_path(r'^rides/(?P<pk>\d+)/$',views.UserRidesView.as_view(),name = "rides"),
+
+
     
 ]
