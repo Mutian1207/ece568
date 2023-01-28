@@ -11,16 +11,42 @@
         <br>
         
         <br>
+        <div class="row">
+            <div class="col col-sm-3">
         
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Account Email:{{object.email}}</li>
-            <li class="list-group-item"></li>
-            <li class="list-group-item">A third item</li>
-            <li class="list-group-item">A fourth item</li>
-            <li class="list-group-item">And a fifth one</li>
-          </ul>
 
+            </div>
+            <div class="col col-sm-6">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">User ID:{{object.pk}}</li>
+                    <li class="list-group-item">Account Email:{{object.email}}</li>
+                    <li class="list-group-item">Is a registered Driver?  
+                        {%if object.is_driver%} 
+                            <button class="btn-info"> Yes</button>
+                        {%else%}
+                        <button class="btn-info"> No</button>
+                        
+                        {%endif%}
+                    </li>
+                    <li class="list-group-item">Vehicle Type:{{object.vehic_type}}</li>
+                    <li class="list-group-item">License Number:{{object.lice_plate_number}} </li>
+                    <li class="list-group-item"> Max Passenger Number:{{object.max_pass_num}}</li>
+                  </ul>
+                  
+
+
+            </div>
+            
+            <div class="col col-sm-3">
+                <br>
+                <br>
+                <br>
+                <div class="container" algin="center"><a href="{%url 'basicapp:updateinfo' pk=object.pk %}"><button type='button' class="btn btn-warning">update</button></a></div>
+            </div>
+        </div>  
+<br>
+          
     </div>
 
-
+   
 {%endblock%}

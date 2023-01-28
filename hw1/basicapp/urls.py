@@ -9,6 +9,15 @@ urlpatterns = [
     path('login/',views.UserLoginView.as_view(),name = "login"),
     path('logout/',views.UserLogoutView.as_view(),name = "logout"),
     path('success/',views.OrderSuccessView.as_view(),name = "ordersuccess"),
+<<<<<<< HEAD
     re_path(r'^/(?P<pk>\d+)/$',views.PersonalInfoView.as_view(),name = "personalinfo"),
     re_path(r'^rides/(?P<pk>\d+)/$',views.UserRidesView.as_view(),name = "rides"),
+=======
+    re_path(r'^info/(?P<pk>\d+)/$',views.PersonalInfoView.as_view(),name = "personalinfo"),
+    re_path(r'^updateinfo/(?P<pk>\d+)/$',views.UpdateInfoView.as_view(),name = "updateinfo"),
+    re_path(r'^rides/(?P<pk>\d+)/$',views.UserRidesView.as_view(),name = "rides"),
+
+
+    
+>>>>>>> e94d2f59f8ec495c1fb1d72f4c910a59ca0c01b5
 ]
