@@ -82,4 +82,3 @@ class EditOpenRideView(UpdateView):
     template_name = "editrides.html"
     pass
 
-         
