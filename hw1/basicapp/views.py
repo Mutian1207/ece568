@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView,LogoutView
 from .models import Users,Rides,Sharers
 from .forms import UserRegisterForm,CreateOrderForm
-from django.urls import reverse_lazy
+from django.urls import reverse,reverse_lazy
 # Create your views here.
 class IndexView(TemplateView):
     template_name = "homepage.html"
@@ -29,7 +29,7 @@ class UserLogoutView(LogoutView):
     template_name="base.html"
 
 #yourrides view
-class UserRides(DetailView):
+class UserRidesView(DetailView):
     model = Rides
     template_name = "userrides.html"
 
