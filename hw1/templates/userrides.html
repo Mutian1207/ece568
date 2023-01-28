@@ -21,8 +21,8 @@ Register Account
         <li class="list-group-item">arrivaltime:{{ object.arr_date_time }}</li>
     </ul>
     <div class="card-body">
-        <a href="{% url 'basicapp:ride-edits' rides.id %}" class="card-link">edit</a>
-        <a href="{% url 'basicapp:ride-details' rides.id %}" class="card-link">detail</a>
+        <a href="{% url 'basicapp:ride-edits' %}" class="card-link">edit</a>
+        <a href="{% url 'basicapp:ride-details' %}" class="card-link">detail</a>
         <!-- <a class="float-end" href="{% url 'basicapp:ride-views' rides.id %}">返回列表</a> -->
     </div>
     {% endfor %}
