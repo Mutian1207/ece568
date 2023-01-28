@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView,LogoutView
 from .models import Users,Rides,Sharers
-from .forms import UserRegisterForm,CreateOrderForm
+from .forms import UserRegisterForm,CreateOrderForm,EditOpenRideForm
 from django.urls import reverse,reverse_lazy
 # Create your views here.
 class IndexView(TemplateView):
@@ -28,13 +28,19 @@ class UserLogoutView(LogoutView):
     next_page = '/'
     template_name="base.html"
 
-#yourrides view
-class UserRidesView(DetailView):
+#openrides view
+class UserOpenRidesView(ListView):
     model = Rides
+    context_object_name = "open_ride_list"
+    template_name = "userrides.html"
+
+#sharerides view
+class UserShareRidesView(ListView):
+    context_object_name = "share_ride_list"
     template_name = "userrides.html"
 
     def get_queryset(self):
-        return Rides.objects.filter(status = 'op')
+        return Sharers.objects.all()
 
 #create order view
 class CreateOrderView(CreateView):
@@ -42,6 +48,7 @@ class CreateOrderView(CreateView):
     form_class = CreateOrderForm
 
     success_url = reverse_lazy("basicapp:ordersuccess")
+
 #order success view
 class OrderSuccessView(TemplateView):
     template_name = "ordersuccess.html"
@@ -52,6 +59,11 @@ class PersonalInfoView(LoginRequiredMixin,DetailView):
     model = Users
     template_name = "personalinfo.html"
 
+class EditOpenRideView(UpdateView):
+    model = Rides
+    form_class = EditOpenRideForm
+    template_name = "editrides.html"
+    pass
 
          
         
