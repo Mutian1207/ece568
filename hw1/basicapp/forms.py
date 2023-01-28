@@ -31,4 +31,7 @@ class CreateOrderForm(forms.ModelForm):
         self.fields['dest_addr'].label = "Destination"
         self.fields['party_num'].label = "Party number"
         self.fields['arr_date_time'].label = "Arrival time"
-        self.fields['other_reg'].label = "Other requirements"   
+        self.fields['other_reg'].label = "Other requirements" 
+
+class EditOpenRideForm(forms.ModelForm):
+    pass  
