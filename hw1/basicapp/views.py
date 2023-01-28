@@ -75,10 +75,16 @@ class UpdateInfoView(LoginRequiredMixin,UpdateView):
 
     fields = ['is_driver','vehic_type','lice_plate_number','max_pass_num','other_reg']
     success_url = '/'
-    
+#edit open ride
 class EditOpenRideView(UpdateView):
     model = Rides
     form_class = EditOpenRideForm
     template_name = "editrides.html"
     pass
 
+
+# To Drive(driver registered)
+class ToDriveView(ListView):
+    model = Rides
+    template_name ="todrive.html"
+    
