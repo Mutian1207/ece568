@@ -49,6 +49,7 @@ class Users(AbstractUser):
     objects = UserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+    
 class Rides(models.Model):
     STATUS = (
         ('op','open'),

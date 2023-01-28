@@ -14,3 +14,4 @@ class UserRegisterForm(forms.ModelForm):
         super().__init__(*args,**kwargs)
         self.fields['email'].label = "Email"
         self.fields['password'].label = "Password"    
+
