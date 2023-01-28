@@ -29,7 +29,7 @@ class UserLogoutView(LogoutView):
     template_name="base.html"
 
 #yourrides view
-class UserRides(DetailView):
+class UserRidesView(DetailView):
     model = Rides
     template_name = "userrides.html"
 
