@@ -7,11 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView,LogoutView
 from .models import Users,Rides,Sharers
 from .forms import UserRegisterForm,CreateOrderForm
-<<<<<<< HEAD
-from django.urls import reverse_lazy
-=======
 from django.urls import reverse,reverse_lazy
->>>>>>> 62e47275da6e0cec44df0c29a5c9e8b5aba0eabf
 # Create your views here.
 class IndexView(TemplateView):
     template_name = "homepage.html"
