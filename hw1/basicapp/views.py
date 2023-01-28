@@ -13,7 +13,8 @@ class IndexView(TemplateView):
     template_name = "homepage.html"
 
 #register view
-class RegisterView(CreateView):   
+class RegisterView(CreateView):
+    model = Users
     template_name = "register.html"
     form_class = UserRegisterForm
     success_url = reverse_lazy("basicapp:homepage")
@@ -36,6 +37,14 @@ class CreateOrderView(CreateView):
     form_class = CreateOrderForm
 
     success_url = reverse_lazy("basicapp:ordersuccess")
+ 
+    def form_valid(self,form):
+        self.object = form.save(commit=False)
+        self.object.owner = self.request.user.pk
+        self.object.sharable = True
+        self.object.status = 'op'
+        self.object.save()
+        return super().form_valid(form)
 #order success view
 class OrderSuccessView(TemplateView):
     template_name = "ordersuccess.html"
@@ -47,6 +56,12 @@ class PersonalInfoView(LoginRequiredMixin,DetailView):
     model = Users
     template_name = "personalinfo.html"
 
+#update personal info view
+class UpdateInfoView(LoginRequiredMixin,UpdateView):
+    model = Users
+    template_name="updateinfo.html"
+
+    fields = ['is_driver','vehic_type','lice_plate_number','max_pass_num','other_reg']
+    success_url = '/'
 
          
-        

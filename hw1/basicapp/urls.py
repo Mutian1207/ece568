@@ -9,7 +9,7 @@ urlpatterns = [
     path('login/',views.UserLoginView.as_view(),name = "login"),
     path('logout/',views.UserLogoutView.as_view(),name = "logout"),
     path('success/',views.OrderSuccessView.as_view(),name = "ordersuccess"),
-    re_path(r'^/(?P<pk>\d+)/$',views.PersonalInfoView.as_view(),name = "personalinfo"),
+    re_path(r'^info/(?P<pk>\d+)/$',views.PersonalInfoView.as_view(),name = "personalinfo"),
+    re_path(r'^updateinfo/(?P<pk>\d+)/$',views.UpdateInfoView.as_view(),name = "updateinfo"),
     
-
 ]

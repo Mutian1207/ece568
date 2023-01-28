@@ -3,19 +3,19 @@ from .models import Users,Sharers,Rides
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 
 
-class UserRegisterForm(forms.ModelForm):
+class UserRegisterForm(UserCreationForm):
 
-    class Meta():
+    class Meta:
         model = Users
-        fields = ('email','password')
+        fields = ('email',)
         widgets ={'email': forms.EmailInput(),
-                    'password':forms.PasswordInput(),}
+                    }
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.fields['email'].label = "Email"
-        self.fields['password'].label = "Password"    
+        # self.fields['password'].label = "Password"    
 class CreateOrderForm(forms.ModelForm):
-    class Meta():
+    class Meta:
         model = Rides
         fields = ('dest_addr','arr_date_time','party_num','other_reg')
         widgets ={'dest_addr': forms.TextInput(),
@@ -28,3 +28,4 @@ class CreateOrderForm(forms.ModelForm):
         self.fields['party_num'].label = "Party number"
         self.fields['arr_date_time'].label = "Arrival time"
         self.fields['other_reg'].label = "Other requirements"   
+
