@@ -55,16 +55,16 @@ class Rides(models.Model):
         ('cf','confirmed'),
         ('cp','complete'),
         )
-    ride_id = models.BigAutoField(primary_key=True)
-    owner = models.ForeignKey('Users', on_delete=models.CASCADE, related_name='owners')
+    ride_id = models.BigAutoField(primary_key=True,auto_created=True)
+    owner = models.ForeignKey('Users', on_delete=models.CASCADE, related_name='owners',null=True)
     dest_addr = models.CharField(max_length=200)
     arr_date_time = models.DateTimeField()
     party_num = models.PositiveSmallIntegerField()
-    sharable = models.BooleanField()
-    status = models.CharField(max_length=2, choices=STATUS)
-    driver_acc = models.ForeignKey('Users', on_delete=models.CASCADE, related_name='drivers')
+    sharable = models.BooleanField(null=True)
+    status = models.CharField(max_length=2, choices=STATUS,null=True)
+    driver_acc = models.ForeignKey('Users', on_delete=models.CASCADE, related_name='drivers',null=True)
     other_reg = models.TextField(max_length=300, null=True)
-
+    
 class Sharers(models.Model):
     share_id = models.ForeignKey('Rides', on_delete=models.CASCADE, related_name='share_ride')
     sharer_id = models.ForeignKey('Users', on_delete=models.CASCADE, related_name='sharers')

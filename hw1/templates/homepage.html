@@ -1,19 +1,68 @@
 {%extends './base.html'%}
-
+{%load bootstrap4%}
 {%block title%}
-    homepage
+    <title>homepage</title>
 {%endblock%}
 
 {%block body_block%}
+{%if user.is_authenticated%}
+    <br>
+    <br>
+    <div class="container">
+      
+            <div class="col col-4">
+                <h1 style="color:aliceblue">Go Somewhere!</h1>
+           
+            </div>
+        </div>
+       
+    </div>
+   
+    
+    <div class ="container text-center">
+        <div class="row" >
+            <!-- first half part -->
+            {%csrf_token%}
+            <div class="col col-sm-8">
+                <form method = "POST">
+                    {%csrf_token%}
+                    <div style="color:aliceblue;font-size: x-large;" class="container-fluid"> {%bootstrap_form form%}</div>
+                    <br>
+                    <div align="center"> <input type="submit" class='btn btn-primary' style="background-color: lightblue; color:black" value="submit">
+                    </div>
+                   
+                </form>
+          
+           
+            </div>
+            <!-- second half part  -->
+            <div class = "col col-sm-4">
+              
+                <h1 style="color:aliceblue">Check My Orders!</h1>
+                <br>
+                <br>
+            
+                <button type="button" class="btn btn-info">MyOrders</button>
+                
+                <br>
+                <br>
+                <br>
+            </div>
+
+        </div>
+
+    </div>
+{%else%}
     <div class='container' align="center"> 
         <br>
         <br>
         <br>
         <br>
          <h1 style="color:white" > WELCOME TO HOMEPAGE!</h1>
-    <br>
-    <br>
-    <br>
-    <h2 style="color:whitesmoke"> PLEASE LOG IN OR REGISTER FIRST!</h2>
+        <br>
+        <br>
+        <br>
+        <h2 style="color:whitesmoke"> PLEASE LOG IN OR REGISTER FIRST!</h2>
     </div>
+{%endif%}
 {%endblock%}
