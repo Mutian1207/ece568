@@ -28,7 +28,7 @@ Register Account
                             <li class="list-group-item">destination: {{ object.dest_addr }}</li>
                             <li class="list-group-item">arrivaltime: {{ object.arr_date_time }}</li>
                         </ul>
-                        {% if object.status == NULL %}
+                        {% if object.status == "confirmed" %}
                         <a href="#" class="card-link">edit</a>
                         {% endif %}
                         <a href="#" class="card-link">details</a>
