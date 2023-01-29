@@ -52,8 +52,8 @@ class CreateOrderView(CreateView):
  
     def form_valid(self,form):
         self.object = form.save(commit=False)
-        self.object.owner = self.request.user.pk
-        self.object.sharable = True
+        self.object.owner = self.request.user
+
         self.object.status = 'op'
         self.object.save()
         return super().form_valid(form)
@@ -73,7 +73,7 @@ class UpdateInfoView(LoginRequiredMixin,UpdateView):
     model = Users
     template_name="updateinfo.html"
 
-    fields = ['is_driver','vehic_type','lice_plate_number','max_pass_num','other_reg']
+    fields = ['is_driver','vehic_type','name','lice_plate_number','max_pass_num','other_reg']
     success_url = '/'
 #edit open ride
 class EditOpenRideView(UpdateView):
@@ -87,4 +87,5 @@ class EditOpenRideView(UpdateView):
 class ToDriveView(ListView):
     model = Rides
     template_name ="todrive.html"
-    
+    context_object_name = "open_ride_list"
+

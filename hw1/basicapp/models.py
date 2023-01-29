@@ -46,6 +46,7 @@ class Users(AbstractUser):
     lice_plate_number = models.CharField(max_length=10, null=True)
     max_pass_num = models.PositiveSmallIntegerField(null=True)
     other_reg = models.TextField(max_length=300, null=True)
+    name = models.CharField(max_length=20,null=True)
     objects = UserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
