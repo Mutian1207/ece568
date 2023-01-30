@@ -8,6 +8,7 @@ from django.contrib.auth.views import LoginView,LogoutView
 from .models import Users,Rides,Sharers
 from .forms import UserRegisterForm,CreateOrderForm,EditOpenRideForm
 from django.urls import reverse,reverse_lazy
+from django.http import HttpResponse
 
 # Create your views here.
 class IndexView(TemplateView):
@@ -144,12 +145,25 @@ class ConfirmDriveView(View):
         
     def get(self, request,**kwargs):
         pk_ride = self.kwargs["pk"]
- 
+       
         self.object = self.model.objects.get(pk=pk_ride)
+        ride_shares = Sharers.objects.all().filter(share_id=self.object)
         self.object.status = 'cf'
         self.object.driver_acc = self.request.user
         self.object.save()
 
+        #send email
+        email_list =  [self.object.owner.email]
+        for ob in ride_shares:
+            email_list.append(ob.sharer_id.email)
+        
+        send_mail(
+            'Ride confirmed',
+            'Your ride has been confirmed by a driver',
+            from_email = 'mutian991207@gmail.com',
+            recipient_list = email_list,
+            fail_silently=False,
+        )
         return render(request,"confirmdrive.html")
 
 # to share ride
@@ -196,7 +210,6 @@ class JoinInfoView(CreateView):
    
         self.object.share_id = Rides.objects.get(pk=pk)
         self.object.sharer_id = self.request.user
-        print(self.object)
         self.object.save()
 
         return super().form_valid(form)
