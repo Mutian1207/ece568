@@ -13,4 +13,8 @@ urlpatterns = [
     re_path(r'^updateinfo/(?P<pk>\d+)/$',views.UpdateInfoView.as_view(),name = "updateinfo"), # update personal info view
     re_path(r'^rides/(?P<pk>\d+)/$',views.UserOpenRidesView.as_view(),name = "rides"),# my rides view
     re_path(r'^todrive/(?P<pk>\d+)/$',views.ToDriveView.as_view(),name = "todrive"),# To drive view
+    re_path(r'^driveconfirm/(?P<pk>\d+)/$',views.ConfirmDriveView.as_view(),name="confirmdrive"),# Driver confirm drive
+    re_path(r'^joinshare/(?P<pk>\d+)/$',views.JoinShareView.as_view(),name="joinshare"), # all sharable orders suitable
+    re_path(r'^joininfo/(?P<pk>\d+)/$',views.JoinInfoView.as_view(),name="editjoininfo"),# edit join share info
+   # re_path(r'^sharesearch/(?P<pk>\d+)/$',views.ShareSearchView.as_view(),name="shareforsearch"), # share search 
 ]

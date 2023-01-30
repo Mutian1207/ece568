@@ -28,7 +28,7 @@
                     
                     {% if user.is_authenticated%}
                     <li class="nav-item"><a style = 'color:white;' class=' nav-link active' href="{% url 'basicapp:todrive' pk=user.pk %}"> ToDrive </a></li>
-                    <li class="nav-item"><a style = 'color:white;' class='nav-link active' href="">JoinShare</a></li>
+                    <li class="nav-item"><a style = 'color:white;' class='nav-link active' href="{% url 'basicapp:joinshare' pk=user.pk%}">JoinShare</a></li>
                     {%endif%}
 
                 </ul>
@@ -37,7 +37,7 @@
                     <ul class="navbar-nav navbar-right">
                  
                     <li class="nav-item"><a style = 'color:white;' class=' nav-link active' href="{%url 'basicapp:personalinfo' pk=user.pk%}">MyInfo</a></li>
-                    <li class="nav-item"><form id ="logout-form" method = "post"> {%csrf_token%}<a style = 'color:white;' class=' nav-link active' href="{%url 'basicapp:logout'%}">logout </a></form></li>
+                    <li class="nav-item"><form id ="logout-form" method = "post"> {%csrf_token%}<a style = 'color:white;' class=' nav-link active' href="{%url 'basicapp:logout'%}">Logout </a></form></li>
                     </ul>
                 {%else%}
                     <ul class="navbar-nav navbar-right">

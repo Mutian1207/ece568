@@ -57,6 +57,12 @@ class Rides(models.Model):
         ('cf','confirmed'),
         ('cp','complete'),
         )
+    VEHICLE_TYPE = (
+        ('su','suv'),
+        ('mp','mpv'),
+        ('sd','sedan'),
+        ('al','alltypes')
+        )
     ride_id = models.BigAutoField(primary_key=True,auto_created=True)
     owner = models.ForeignKey('Users', on_delete=models.CASCADE, related_name='owners',null=True)
     dest_addr = models.CharField(max_length=200)
@@ -65,6 +71,7 @@ class Rides(models.Model):
     sharable = models.BooleanField(null=True)
     status = models.CharField(max_length=2, choices=STATUS,null=True)
     driver_acc = models.ForeignKey('Users', on_delete=models.CASCADE, related_name='drivers',null=True)
+    required_vehic_type = models.CharField(max_length=2, null=True, choices=VEHICLE_TYPE)
     other_reg = models.TextField(max_length=300, null=True)
     
 class Sharers(models.Model):

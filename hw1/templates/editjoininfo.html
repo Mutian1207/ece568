@@ -1,0 +1,18 @@
+{%extends './base.html'%}
+{%load bootstrap4%}
+{%block title%}
+<title>Edit JoinInfo</title>
+{%endblock%}
+
+{%block body_block %}
+<!DOCTYPE html>
+   
+    <div class="container" align = "center">
+    <form method="POST">
+        {% csrf_token %}
+        <div>  <h1 style="color:aliceblue;">{%bootstrap_form form%}</h1>  </div>
+    
+        <button type="submit" class="btn btn-light"> submit </button>
+    </form>
+    </div>  
+{%endblock%}

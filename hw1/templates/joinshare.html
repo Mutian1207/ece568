@@ -1,0 +1,94 @@
+{%extends "./base.html"%}
+{%load bootstrap4%}
+{%block title%}
+<title>JoinDrive</title>
+{%endblock%}
+{%block body_block%}
+<br>
+
+<div class="container">
+    <form action="{%url 'basicapp:joinshare' pk=user.pk %}" method="POST">
+        {% csrf_token %}
+        <h3 style="color:azure">Destination &emsp; Earliest Time &emsp; &ensp; Latest Time</h3>
+        <input type="text" placeholder="Destination"  name="destination">
+        <input type="datetime-local" placeholder="earliest arrival time" name="early_time">
+        <input type="datetime-local" placeholder="latest arrival time" name="late_time">
+        <button class="btn btn-outline-secondary" type="submit">Search</button>
+    </form>
+
+
+</div>
+
+
+{% for ride in sharablerides %}
+    {%if ride.owner != user %}
+    <div class="row">
+        <div class="col col-1">   
+        </div>
+        <div class="col col-8">
+            <ul class="list-group">
+                <li class="list-group-item active" aria-current="true">
+                    Vehicle:{{ride.required_vehic_type}}
+                    <div class="row">
+                        <div class="col col-6">
+                            OpenRide ID:{{ride.ride_id}} 
+                        </div>
+                        <div class="col col-6">
+                            Owner:{{ride.owner}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-6">
+                            Sharable:{{ride.sharable}}
+                        </div>
+                        <div class="col col-6">
+                            Party Number:{{ride.party_num}}
+                        </div>
+                    </div>
+                   
+                    <div class="row">
+                        <div class="col col-6">
+                            Destination: {{ride.dest_addr}}
+                        </div>
+                        <div class="col col-6">
+                            Arrival at: {{ ride.arr_date_time }}
+                        </div>
+                    </div>
+                    {% for share in all_shares %}
+                            
+                        {% if ride == share.share_id %}
+                        <div class="row">
+                            <div class="col col-6">
+                                {% if share.sharer_id == user %}
+                                    <div style="color:red">Sharer ID: {{share.sharer_id}} </div>
+                                {%else%}
+                                    Sharer ID: {{share.sharer_id}}
+                                {%endif%}
+                            </div>
+                            <div class="col col-6">
+                                Sharer Party Number: {{ share.share_party_num }}
+                            </div>
+                        </div>
+                        {%endif%}
+                    {%endfor%}
+             
+                </li>
+            </ul>
+        </div>
+        <div class="col col-3">
+            <br>                 
+            <a href="{% url 'basicapp:editjoininfo' pk=ride.pk %}"> 
+            <button type="submit" class="btn btn-warning"><h1 style = "color:azure;font-size: x-large;">Join!</h1>
+            </button>
+            </a>
+        </div>
+        
+    </div>
+
+    <br>
+
+    {%endif%}
+{%endfor%}
+
+
+{%endblock%}
