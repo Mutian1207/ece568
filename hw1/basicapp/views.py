@@ -9,6 +9,7 @@ from .models import Users,Rides,Sharers
 from .forms import UserRegisterForm,CreateOrderForm,EditOpenRideForm
 from django.urls import reverse,reverse_lazy
 from django.http import HttpResponse
+from django.core.mail import send_mail
 
 # Create your views here.
 class IndexView(TemplateView):
@@ -119,9 +120,10 @@ class ToDriveView(ListView):
         for share in all_shares:
             counter[share.share_id] +=share.share_party_num
         
-        max_pass_num = self.request.user.max_pass_num
+        max_pass_num = self.request.user.max_pass_num if self.request.user.max_pass_num else 0
+        print(max_pass_num)
         vehic_type = self.request.user.vehic_type
-        context['open_ride_list'] = list(filter(lambda key: (counter[key]<=max_pass_num and 
+        context['open_ride_list'] = list(filter(lambda key: (counter[key]<= max_pass_num and 
                                                             #total party number limit
                                                             (key.required_vehic_type==vehic_type or 
                                                             key.required_vehic_type=='al')) and 
