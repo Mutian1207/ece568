@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.views.generic import (TemplateView,ListView,DeleteView,
+from django.views.generic import (View,TemplateView,ListView,DeleteView,
                                     CreateView,UpdateView,DetailView,RedirectView,
                                     )
 from django.contrib.auth.decorators import login_required
