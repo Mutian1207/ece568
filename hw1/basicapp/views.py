@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
-from django.views.generic import (View,TemplateView,ListView,DeleteView,
-                                    CreateView,UpdateView,DetailView,RedirectView
+from django.views.generic import (TemplateView,ListView,DeleteView,
+                                    CreateView,UpdateView,DetailView,RedirectView,
                                     )
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,7 +8,6 @@ from django.contrib.auth.views import LoginView,LogoutView
 from .models import Users,Rides,Sharers
 from .forms import UserRegisterForm,CreateOrderForm,EditOpenRideForm
 from django.urls import reverse,reverse_lazy
-from django.http import HttpResponse
 
 # Create your views here.
 class IndexView(TemplateView):
@@ -33,17 +32,36 @@ class UserLogoutView(LogoutView):
 
 #openrides view
 class UserOpenRidesView(ListView):
-    model = Rides
+    model = Sharers
     context_object_name = "open_ride_list"
     template_name = "userrides.html"
 
-#sharerides view
-class UserShareRidesView(ListView):
-    context_object_name = "share_ride_list"
-    template_name = "userrides.html"
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        user_pk = str(self.request.user.pk)
+        sql1 = 'SELECT * FROM basicapp_sharers a' 
+        sql2 = ' inner join basicapp_rides b on a.share_id_id=b.ride_id and a.sharer_id_id=' + user_pk
+        sql3 = ' inner join basicapp_users c on c.id=b.owner_id'
+        data['share_ride_list'] = Sharers.objects.raw(sql1 + sql2 + sql3)
+        data['is_driver'] = Users.objects.get(id=self.request.user.pk).is_driver
+        if(Users.objects.get(id=self.request.user.pk).is_driver):
+            selectitems = 'SELECT * FROM basicapp_users a'
+            jointable1 = ' inner join basicapp_rides b on b.driver_acc_id=' + user_pk + 'and a.id=' + user_pk
+            #jointable2 = ' inner join basicapp_shares c on b.ride_id=c.share_id_id'
+            res = Rides.objects.raw(selectitems + jointable1)
+            share_list = {}
+            for item in res:
+                print(item.ride_id)
+                print(Sharers.objects.filter(share_id=item.ride_id))
+                ride_id = item.email
+                share_list[ride_id] = Sharers.objects.filter(share_id=item.ride_id)
+                print(share_list)
+            data['drive_ride_list'] = res
+            data['sharers_list'] = share_list
+        return data
 
     def get_queryset(self):
-        return Sharers.objects.all()
+        return Rides.objects.filter(owner=self.request.user).order_by('-arr_date_time')
 
 #create order view
 class CreateOrderView(CreateView):

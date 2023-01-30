@@ -11,75 +11,101 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <div class="card border-success" style="width: 30rem;">
-                <div style="width: 30rem;">
-                    {% for object in open_ride_list %}
-                    {% if object.status != "cp" %}
-                    <div class="card-body bg-white">
-                        <h5 class="card-title">OpenRide ID: {{ object.ride_id }}</h5>
-                        <p class="card-text">
+            <div class="container">
+                <div class="card border-success" style="width: 20rem;">
+                    <div style="width: 20rem;">
+                        {% for object in open_ride_list %}
+                        {% if object.status != "cp" %}
+                        <div class="card-body bg-white">
+                            <h5 class="card-title">YourRide ID: {{ object.ride_id }}</h5>
+                            <p class="card-text">
+                                {% if object.status == "op" %}
+                                <span class="badge bg-success text-white">open</span>
+                                {% else %}
+                                <span class="badge bg-warning text-white">confirmed</span>
+                                {% endif %}
+                            </p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><span class="badge bg-info text-white">destination: {{object.dest_addr }}</span></li>
+                                <li class="list-group-item"><span class="badge bg-info text-white">arrivaltime: {{object.arr_date_time }}</span></li>
+                                <li class="list-group-item"><span class="badge bg-info text-white">partynumber: {{object.party_num }}</span></li>
+                            </ul>
                             {% if object.status == "op" %}
-                            <span class="badge bg-info text-white">open</span>
-                            {% else %}
-                            <span class="badge bg-info text-white">confirmed</span>
+                            <a href="#" class="card-link">edit</a>
                             {% endif %}
-                            <span class="badge bg-info text-white">{{ object.arr_date_time }}</span>
-                        </p>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">destination: {{ object.dest_addr }}</li>
-                            <li class="list-group-item">arrivaltime: {{ object.arr_date_time }}</li>
-                        </ul>
-                        {% if object.status == NULL %}
-                        <a href="#" class="card-link">edit</a>
+                            <a href="#" class="card-link">details</a>
+                        </div>
                         {% endif %}
-                        <a href="#" class="card-link">details</a>
+                        {% endfor %}
                     </div>
-                    {% endif %}
-                    {% endfor %}
                 </div>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="card border-success" style="width: 30rem;">
-                <div style="width: 30rem;">
-                    {% for object in share_ride_list %}
-                    <div class="card-body bg-white">
-                        <h5 class="card-title">ShareRide ID: {{ object.ride_id }}</h5>
-                        <p class="card-text">
-                            <span class="badge bg-info text-white">{{ object.arr_date_time }}</span>
-                        </p>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">partynumber: {{ object.party_num }}</li>
-                            <li class="list-group-item">destination: {{ object.dest_addr }}</li>
-                            <li class="list-group-item">arrivaltime: {{ object.arr_date_time }}</li>
-                        </ul>
-                        <a href="#" class="card-link">edit</a>
-                        <a href="#" class="card-link">details</a>
+            <div class="container">
+                <div class="card border-success" style="width: 20rem;">
+                    <div style="width: 20rem;">
+                        {% for object in share_ride_list %}
+                        <div class="card-body bg-white">
+                            <h5 class="card-title">ShareRide ID: {{ object.ride_id }}</h5>
+                            <p class="card-text">
+                                {% if object.status == "op" %}
+                                <span class="badge bg-success text-white">open</span>
+                                {% else %}
+                                <span class="badge bg-warning text-white">confirmed</span>
+                                {% endif %}
+                            </p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><span class="badge bg-info text-white">owner: {{object.email }}</span></li>
+                                <li class="list-group-item"><span class="badge bg-info text-white">ownerpartynumber: {{object.party_num }}</span></li>
+                                <li class="list-group-item"><span class="badge bg-info text-white">mypartynumber: {{object.share_party_num }}</span></li>
+                                <li class="list-group-item"><span class="badge bg-info text-white">destination: {{object.dest_addr }}</span></li>
+                            </ul>
+                            {% if object.status == "op" %}
+                            <a href="#" class="card-link">cancel</a>
+                            {% endif %}
+                            <a href="#" class="card-link">details</a>
+                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="card border-success" style="width: 30rem;">
-                <div style="width: 30rem;">
-                    {% for object in open_ride_list %}
-                    <div class="card-body bg-white">
-                        <h5 class="card-title">DriveRide ID: {{ object.ride_id }}</h5>
-                        <p class="card-text">
-                            <span class="badge bg-info text-white">{{ object.arr_date_time }}</span>
-                        </p>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">partynumber: {{ object.party_num }}</li>
-                            <li class="list-group-item">destination: {{ object.dest_addr }}</li>
-                            <li class="list-group-item">arrivaltime: {{ object.arr_date_time }}</li>
-                        </ul>
-                        <a href="#" class="card-link">edit</a>
-                        <a href="#" class="card-link">details</a>
+            <div class="container">
+                <div class="card border-success" style="width: 20rem;">
+                    <div style="width: 20rem;">
+                        {% if is_driver %}
+                        {% if drive_ride_list != NULL%}
+                        {% for object in drive_ride_list %}
+                        <div class="card-body bg-white">
+                            <h5 class="card-title">DriveRide ID: {{ object.ride_id }}</h5>
+                            <p class="card-text">
+                                <span class="badge bg-info text-white">{{ object.arr_date_time }}</span>
+                            </p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">destination: {{ object.dest_addr }}</li>
+                                <li class="list-group-item">owner: {{ object.owner }}</li>
+                                <li class="list-group-item">sharers: {% for key,sharers in sharers_list.items %} {% if key == object.email %}{% for sharer in sharers %}{{sharer.sharer_id.email}}{% endfor %}{% endif %}{% endfor %}</li>
+                            </ul>
+                            <a href="#" class="card-link">details</a>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <h5 class="card-title">You don't have a drive order!</h5>
+                        <a href="{% url 'basicapp:todrive' pk=user.pk %}">
+                            <button type="button" class="btn btn-info">Claim a drive!</button>
+                        </a>
+                        {% endif %}
+                        {% else %}
+                        <h5 class="card-title">You are not a driver!</h5>
+                        <a href="{%url 'basicapp:updateinfo' pk=user.pk %}">
+                            <button type="button" class="btn btn-info">Be a driver!</button>
+                        </a>
+                        {% endif %}
                     </div>
-                    {% endfor %}
                 </div>
             </div>
         </div>
