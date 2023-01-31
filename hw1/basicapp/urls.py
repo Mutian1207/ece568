@@ -20,7 +20,7 @@ urlpatterns = [
    # re_path(r'^sharesearch/(?P<pk>\d+)/$',views.ShareSearchView.as_view(),name="shareforsearch"), # share search
     re_path(r'^myrideinfo/(?P<pk>\d+)/$',views.RideDetailView.as_view(),name="rideinfo"), #view ride detail
     re_path(r'^myshareinfo/(?P<pk>\d+)/$',views.ShareDetailView.as_view(),name="sharerideinfo"), #view share detail
-    re_path(r'^deleteride/(?P<pk>\d+)/$',views.RideDeleteView.as_view(),name="deleteride"), #view share detail
+    re_path(r'^deleteride/(?P<pk>\d+)/$',views.RideDeleteView.as_view(),name="deleteride"), #delete open detail
     re_path(r'^deleteshare/(?P<pk>\d+)/$',views.ShareDeleteView.as_view(),name="deleteshare"), #delete share info
     re_path(r'^mydriveinfo/(?P<pk>\d+)/$',views.DriveDetailView.as_view(),name="driveinfo") #view drive detail
 ]
