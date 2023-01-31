@@ -1,0 +1,44 @@
+{%extends "./base.html"%}
+{%load bootstrap4%}
+{%block title%}
+<title>rideinfo</title>
+{%endblock%}
+{%block body_block%}
+<p><br></p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item active" aria-current="true">Ride {{ ride_list.0.ride_id }}</li>
+                <li class="list-group-item">owner: {{ride_list.0.owner}}</li>
+                <li class="list-group-item">dest_addr: {{ride_list.0.dest_addr}}</li>
+                <li class="list-group-item">arr_date_time: {{ride_list.0.arr_date_time}}</li>
+                <li class="list-group-item">party_num: {{ride_list.0.party_num}}</li>
+                <li class="list-group-item">sharable: {% if ride_list.0.sharable %}yes{% else %}no{% endif %}</li>
+                <li class="list-group-item">status: {{ride_list.0.status}}</li>
+                <li class="list-group-item">driver_acc: {{ride_list.0.driver_acc}}</li>
+                <li class="list-group-item">required_vehic_type: {{ride_list.0.required_vehic_type}}</li>
+                <li class="list-group-item">other_reg: {{ride_list.0.other_reg}}</li>
+            </ul>
+            <a href="{% url 'basicapp:rides' pk=user.pk%}">
+                <button type="button" class="btn btn-info">Return to myorders</button>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-success" style="width: 20rem;">
+                <div style="width: 20rem;">
+                    {% for sharers in ride_list %}
+                    <div class="card-body bg-white">
+                        <h5 class="card-title">Sharer: {{ sharers.name }}</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><span class="badge bg-info text-white">sharer_party_num: {{sharers.share_party_num }}</span></li>
+                            <li class="list-group-item"><span class="badge bg-info text-white">email: {{sharers.email }}</span></li>
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

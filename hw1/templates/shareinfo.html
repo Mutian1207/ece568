@@ -1,0 +1,37 @@
+{%extends "./base.html"%}
+{%load bootstrap4%}
+{%block title%}
+<title>shareinfo</title>
+
+{%endblock%}
+
+{%block body_block%}
+<p><br></p>
+<div class="container">
+    <div class="card border-success" style="width: 20rem;">
+        <div style="width: 20rem;">
+            {% for ride in share_list %}
+            <div class="card-body bg-white">
+                <h5 class="card-title">Owner: </h5>
+                <h6>{{ ride.owner }}</h6>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><span class="badge bg-info text-white">owner_party_num: {{ ride.party_num }}</span></li>
+                    <li class="list-group-item"><span class="badge bg-info text-white">owner email: {{ ride.email }}</span></li>
+                    <li class="list-group-item"><span class="badge bg-info text-white">destination: {{ ride.dest_addr }}</span></li>
+                    <li class="list-group-item"><span class="badge bg-info text-white">arrival time: {{ ride.arr_date_time }}</span></li>
+                    <li class="list-group-item"><span class="badge bg-info text-white">status: {{ ride.status }}</span></li>
+                    <li class="list-group-item"><span class="badge bg-info text-white">your party number: {{ ride.share_party_num }}</span></li>
+                    <li class="list-group-item"><span class="badge bg-info text-white">driver: {{ ride.driver_acc.name }}</span></li>
+                    <li class="list-group-item"><span class="badge bg-info text-white">driver contact: {{ ride.driver_acc.email }}</span></li>
+                    <li class="list-group-item"><span class="badge bg-info text-white">driver plate number: {{ ride.driver_acc.lice_plate_number }}</span></li>
+                    <li class="list-group-item"><span class="badge bg-info text-white">driver vehicle: {{ ride.driver_acc.vehic_type }}</span></li>
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <a href="{% url 'basicapp:rides' pk=user.pk%}">
+        <button type="button" class="btn btn-info">Return to myorders</button>
+    </a>
+</div>
+{%endblock%}

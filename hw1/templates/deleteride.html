@@ -1,0 +1,17 @@
+{%extends "./base.html"%}
+{%load bootstrap4%}
+{%block title%}
+<title>deleteride</title>
+
+{%endblock%}
+
+{%block body_block%}
+<form action='{% url 'basicapp:deleteride' object.pk %}' method="post">{% csrf_token %}
+    <p class = 'text-white'>Are you sure you want to delete "Ride #{{ object.ride_id }}"?</p>
+    {{ form }}
+    <input type="submit"  class="btn btn-info" value="Confirm">
+    <a href="{% url 'basicapp:rides' pk=user.pk%}">
+        <button type="button" class="btn btn-info">No</button>
+    </a>
+</form>
+{%endblock%}

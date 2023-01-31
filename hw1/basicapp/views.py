@@ -10,6 +10,7 @@ from .forms import UserRegisterForm,CreateOrderForm,EditOpenRideForm
 from django.urls import reverse,reverse_lazy
 from django.http import HttpResponse
 from django.core.mail import send_mail
+import re
 
 # Create your views here.
 class IndexView(TemplateView):
@@ -48,18 +49,20 @@ class UserOpenRidesView(ListView):
         data['is_driver'] = Users.objects.get(id=self.request.user.pk).is_driver
         if(Users.objects.get(id=self.request.user.pk).is_driver):
             selectitems = 'SELECT * FROM basicapp_users a'
-            jointable1 = ' inner join basicapp_rides b on b.driver_acc_id=' + user_pk + 'and a.id=' + user_pk
-            #jointable2 = ' inner join basicapp_shares c on b.ride_id=c.share_id_id'
+            jointable1 = ' left join basicapp_rides b on b.driver_acc_id=' + user_pk + 'where a.id=' + user_pk
             res = Rides.objects.raw(selectitems + jointable1)
+            '''
+            print(len(res))
             share_list = {}
             for item in res:
-                print(item.ride_id)
-                print(Sharers.objects.filter(share_id=item.ride_id))
+                #print(item.ride_id)
+                #print(Sharers.objects.filter(share_id=item.ride_id))
                 ride_id = item.email
                 share_list[ride_id] = Sharers.objects.filter(share_id=item.ride_id)
                 print(share_list)
+            '''
             data['drive_ride_list'] = res
-            data['sharers_list'] = share_list
+            #data['sharers_list'] = share_list
         return data
 
     def get_queryset(self):
@@ -217,3 +220,65 @@ class JoinInfoView(CreateView):
 
         return super().form_valid(form)
    
+# view ride detail
+class RideDetailView(ListView):
+    model = Rides
+    context_object_name = "ride_list"
+    template_name = "rideinfo.html"
+
+    def get_queryset(self):
+        user_pk = str(self.request.user.pk)
+        ride_id = re.match('/myrideinfo/\d+',self.request.META['PATH_INFO']).group()[12:]
+        print(user_pk)
+        print(ride_id)
+        sql1 = 'SELECT * FROM basicapp_rides a'
+        sql2 = ' left join basicapp_sharers b on a.ride_id=b.share_id_id and a.owner_id=' + user_pk #+ 'where a.ride_id=' + ride_id
+        sql3 = ' left join basicapp_users c on c.id=b.sharer_id_id where a.ride_id=' + ride_id
+        qs1 = Rides.objects.raw(sql1 + sql2 + sql3)
+        print('length: '+ str(len(qs1)))
+        print(qs1[0].owner)
+        return qs1
+
+class ShareDetailView(ListView):
+    model = Sharers
+    context_object_name = "share_list"
+    template_name = "shareinfo.html"
+
+    def get_queryset(self):
+        user_pk = str(self.request.user.pk)
+        ride_id = re.match('/myshareinfo/\d+',self.request.META['PATH_INFO']).group()[13:]
+        sql1 = 'SELECT * FROM basicapp_rides a'
+        sql2 = ' left join basicapp_sharers b on b.share_id_id=a.ride_id and b.sharer_id_id=' + user_pk + ' where b.share_id_id=' + ride_id
+        qs1 = Rides.objects.raw(sql1 + sql2)
+        return qs1
+
+# delete open ride
+class RideDeleteView(DeleteView):
+    model = Rides
+    template_name = "deleteride.html"
+    success_url = reverse_lazy("basicapp:homepage")
+
+# view share ride detail
+class ShareDeleteView(DeleteView):
+    model = Sharers
+    template_name = "deleteshare.html"
+    success_url = reverse_lazy("basicapp:homepage")
+
+# view drive ride detial
+class DriveDetailView(ListView):
+    model = Rides
+    context_object_name = "ride_list"
+    template_name = "rideinfo.html"
+
+    def get_queryset(self):
+        user_pk = str(self.request.user.pk)
+        ride_id = re.match('/mydriveinfo/\d+',self.request.META['PATH_INFO']).group()[13:]
+        print(user_pk)
+        print(ride_id)
+        sql1 = 'SELECT * FROM basicapp_rides a'
+        sql2 = ' left join basicapp_sharers b on a.ride_id=b.share_id_id and a.driver_acc_id=' + user_pk #+ 'where a.ride_id=' + ride_id
+        sql3 = ' left join basicapp_users c on c.id=b.sharer_id_id where a.ride_id=' + ride_id
+        qs1 = Rides.objects.raw(sql1 + sql2 + sql3)
+        print('length: '+ str(len(qs1)))
+        print(qs1[0].share_id_id)
+        return qs1

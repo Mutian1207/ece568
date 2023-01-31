@@ -32,9 +32,9 @@
                             </ul>
                             {% if object.status == "op" %}
                             <a href="{%url 'basicapp:editride' pk=object.pk %}" class="card-link">edit</a>
-                            <a href="#" class="card-link">cancel</a>
+                            <a href="{%url 'basicapp:deleteride' pk=object.pk %}" class="card-link">delete</a>
                             {% endif %}
-                            <a href="#" class="card-link">details</a>
+                            <a href="{%url 'basicapp:rideinfo' pk=object.ride_id %}" class="card-link">details</a>
                         </div>
                         {% endif %}
                         {% endfor %}
@@ -64,9 +64,9 @@
                                 <li class="list-group-item"><span class="badge bg-info text-white">destination: {{object.dest_addr }}</span></li>
                             </ul>
                             {% if object.status == "op" %}
-                            <a href="#" class="card-link">cancel</a>
+                            <a href="{%url 'basicapp:deleteshare' pk=object.id %}" class="card-link">cancel</a>
                             {% endif %}
-                            <a href="#" class="card-link">details</a>
+                            <a href="{%url 'basicapp:sharerideinfo' pk=object.ride_id %}" class="card-link">details</a>
                         </div>
                         {% endfor %}
                     </div>
@@ -89,18 +89,8 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item"><span class="badge bg-info text-white">destination: {{ object.dest_addr }}</span></li>
                                 <li class="list-group-item"><span class="badge bg-info text-white">owner: {{ object.owner }}</span></li>
-                                <li class="list-group-item"><span class="badge bg-info text-white">sharers: </span></li>
-                                <ul>
-                                    {% for key,sharers in sharers_list.items %} 
-                                    {% if key == object.email %}
-                                    {% for sharer in sharers %}
-                                    <li><span class="badge bg-info text-white">{{sharer.sharer_id.email}}</span></li>
-                                    {% endfor %}
-                                    {% endif %}
-                                    {% endfor %}
-                                </ul>
                             </ul>
-                            <a href="#" class="card-link">details</a>
+                            <a href="{% url 'basicapp:driveinfo' pk=object.ride_id %}" class="card-link">details</a>
                         </div>
                         {% endfor %}
                         {% else %}

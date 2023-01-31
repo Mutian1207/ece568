@@ -55,6 +55,4 @@ class EditOpenRideForm(forms.ModelForm):
         #self.fields['required_vehic_type'].widget.attrs = {"class":"form-control","readonly":"true"}
         self.fields['other_reg'].widget.attrs = {"class":"form-control"}
         self.fields['other_reg'].label = "Other requirements" 
-    
-    #def clean_party_num(self):
-        #party_num = self.cleaned_data.get('party_num')
+
