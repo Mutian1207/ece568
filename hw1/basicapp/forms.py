@@ -36,4 +36,25 @@ class CreateOrderForm(forms.ModelForm):
         self.fields['other_reg'].label = "Other requirements" 
 
 class EditOpenRideForm(forms.ModelForm):
-    pass  
+    class Meta:
+        model = Rides
+        fields = ['dest_addr','arr_date_time','party_num','other_reg']
+    
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        #self.fields['owner'].widget.attrs = {"class":"form-control","disabled":"true"}
+        self.fields['dest_addr'].widget.attrs = {"class":"form-control"}
+        self.fields['dest_addr'].label = "Destination"
+        self.fields['arr_date_time'].widget.attrs = {"class":"form-control"}
+        self.fields['arr_date_time'].label = "Arrival time"
+        self.fields['party_num'].widget.attrs = {"class":"form-control"}
+        self.fields['party_num'].label = "Party number"
+        #self.fields['sharable'].widget.attrs = {"class":"form-control","readonly":"true"}
+        #self.fields['status'].widget.attrs = {"class":"form-control","readonly":"true"}
+        #self.fields['driver_acc'].widget.attrs = {"class":"form-control","readonly":"true"}
+        #self.fields['required_vehic_type'].widget.attrs = {"class":"form-control","readonly":"true"}
+        self.fields['other_reg'].widget.attrs = {"class":"form-control"}
+        self.fields['other_reg'].label = "Other requirements" 
+    
+    #def clean_party_num(self):
+        #party_num = self.cleaned_data.get('party_num')

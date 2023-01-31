@@ -4,4 +4,26 @@
 <title>EditRides</title>
 {%endblock%}
 
+
+
 {%block body_block%}
+
+<form action='' method="post">
+    {% csrf_token %}
+    <p><br></p>
+    {% for item in form %}
+    <div class="container">
+        <div class=" row col-6 mb-3">
+            <label class="col-sm-3 text-white">{{ item.label_tag }}</label>
+            <div class="col">
+                {{ item }}
+                {{ item.errors }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="container">
+        <p class="col-3"><button type="submit" class="btn btn-primary">save</button></p>
+    </div>
+</form>
+{%endblock%}
