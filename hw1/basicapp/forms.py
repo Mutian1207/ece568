@@ -23,9 +23,10 @@ class CreateOrderForm(forms.ModelForm):
         model = Rides
         fields = ('dest_addr','arr_date_time','party_num','sharable','required_vehic_type','other_reg')
         widgets ={'dest_addr': forms.TextInput(),
-                    'arr_date_time':forms.DateTimeInput(),
+                    'arr_date_time':forms.DateTimeInput(attrs={'placeholder':'2022-10-25 14:30:59'}),
                     'party_num':forms.NumberInput(),
-                    'other_reg':forms.TextInput()}
+                    'other_reg':forms.TextInput(attrs={'required': False,'null':True,'blank':True})
+                    }
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.fields['dest_addr'].label = "Destination"

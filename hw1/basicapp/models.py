@@ -45,7 +45,7 @@ class Users(AbstractUser):
     vehic_type = models.CharField(max_length=2, null=True, choices=VEHICLE_TYPE)
     lice_plate_number = models.CharField(max_length=10, null=True)
     max_pass_num = models.PositiveSmallIntegerField(null=True)
-    other_reg = models.TextField(max_length=300, null=True)
+    other_reg = models.TextField(max_length=300, null=True,blank=True)
     name = models.CharField(max_length=20,null=True)
     objects = UserManager()
     USERNAME_FIELD = 'email'
@@ -72,7 +72,7 @@ class Rides(models.Model):
     status = models.CharField(max_length=2, choices=STATUS,null=True)
     driver_acc = models.ForeignKey('Users', on_delete=models.CASCADE, related_name='drivers',null=True)
     required_vehic_type = models.CharField(max_length=2, null=True, choices=VEHICLE_TYPE)
-    other_reg = models.TextField(max_length=300, null=True)
+    other_reg = models.TextField(max_length=300, null=True,blank=True)
     
 class Sharers(models.Model):
     share_id = models.ForeignKey('Rides', on_delete=models.CASCADE, related_name='share_ride')
