@@ -12,6 +12,7 @@
     <div class="row">
         <div class="col-md-4">
             <div class="container">
+                <h5 style="color:blanchedalmond">Your Rides</h5>
                 <div class="card border-success" style="width: 20rem;">
                     <div style="width: 20rem;">
                         {% for object in open_ride_list %}
@@ -45,6 +46,7 @@
 
         <div class="col-md-4">
             <div class="container">
+                <h5 style="color:blanchedalmond">Your Shares</h5>
                 <div class="card border-success" style="width: 20rem;">
                     <div style="width: 20rem;">
                         {% for object in share_ride_list %}
@@ -76,11 +78,13 @@
 
         <div class="col-md-4">
             <div class="container">
+                <h5 style="color:blanchedalmond">Your Drives</h5>
                 <div class="card border-success" style="width: 20rem;">
                     <div style="width: 20rem;">
                         {% if is_driver %}
-                        {% if drive_ride_list != NULL%}
+                        {% if drive_ride_list %}
                         {% for object in drive_ride_list %}
+                        {% if object.status == 'cf' %}
                         <div class="card-body bg-white">
                             <h5 class="card-title">DriveRide ID: {{ object.ride_id }}</h5>
                             <p class="card-text">
@@ -91,7 +95,9 @@
                                 <li class="list-group-item"><span class="badge bg-info text-white">owner: {{ object.owner }}</span></li>
                             </ul>
                             <a href="{% url 'basicapp:driveinfo' pk=object.ride_id %}" class="card-link">details</a>
+                            <a href="{% url 'basicapp:completedrive' pk=object.ride_id %}" class="card-link">complete</a>
                         </div>
+                        {% endif %}
                         {% endfor %}
                         {% else %}
                         <h5 class="card-title">You don't have a drive order!</h5>

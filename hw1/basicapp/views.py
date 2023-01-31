@@ -49,7 +49,7 @@ class UserOpenRidesView(ListView):
         data['is_driver'] = Users.objects.get(id=self.request.user.pk).is_driver
         if(Users.objects.get(id=self.request.user.pk).is_driver):
             selectitems = 'SELECT * FROM basicapp_users a'
-            jointable1 = ' left join basicapp_rides b on b.driver_acc_id=' + user_pk + 'where a.id=' + user_pk
+            jointable1 = ' inner join basicapp_rides b on b.driver_acc_id=' + user_pk + 'where a.id=' + user_pk
             res = Rides.objects.raw(selectitems + jointable1)
             '''
             print(len(res))
@@ -62,6 +62,7 @@ class UserOpenRidesView(ListView):
                 print(share_list)
             '''
             data['drive_ride_list'] = res
+            print(len(res))
             #data['sharers_list'] = share_list
         return data
 
@@ -282,3 +283,18 @@ class DriveDetailView(ListView):
         print('length: '+ str(len(qs1)))
         print(qs1[0].share_id_id)
         return qs1
+
+class CompleteDriveView(View):
+    model = Rides
+    
+    success_url = reverse_lazy("basicapp:homepage")
+    
+        
+    def get(self, request,**kwargs):
+        pk_ride = self.kwargs["pk"]
+       
+        self.object = self.model.objects.get(pk=pk_ride)
+        self.object.status = 'cp'
+        self.object.driver_acc = self.request.user
+        self.object.save()
+        return render(request,'completedrive.html')
