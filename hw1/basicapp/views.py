@@ -268,7 +268,7 @@ class ShareDeleteView(DeleteView):
 class DriveDetailView(ListView):
     model = Rides
     context_object_name = "ride_list"
-    template_name = "rideinfo.html"
+    template_name = "driveinfo.html"
 
     def get_queryset(self):
         user_pk = str(self.request.user.pk)
