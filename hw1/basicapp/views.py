@@ -179,10 +179,13 @@ class JoinShareView(ListView):
     template_name = "joinshare.html"
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
-
+        ride_joined = [ x.share_id.ride_id for x in Sharers.objects.all().filter(sharer_id=self.request.user)]
+        print(ride_joined)
+        all_shares=Sharers.objects.all()
         context['sharablerides'] = context['sharablerides'].filter(sharable=True)
         context['sharablerides'] = context['sharablerides'].filter(status='op')
-        all_shares = Sharers.objects.all()
+        context['sharablerides'] = context['sharablerides'].filter().exclude(ride_id__in= ride_joined)
+        
         context['all_shares'] = all_shares
 
         return context
