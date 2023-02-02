@@ -245,6 +245,17 @@ class ShareDetailView(ListView):
     context_object_name = "share_list"
     template_name = "shareinfo.html"
 
+    def get_context_data(self,**kwargs):
+        data = super().get_context_data(**kwargs)
+        user_pk = str(self.request.user.pk)
+        ride_id = re.match('/myshareinfo/\d+',self.request.META['PATH_INFO']).group()[13:]
+        sql1 = 'SELECT * FROM basicapp_rides a'
+        sql2 = ' left join basicapp_sharers b on b.share_id_id=a.ride_id and b.sharer_id_id!=' + user_pk #+ 'where a.ride_id=' + ride_id
+        sql3 = ' left join basicapp_users c on c.id=b.sharer_id_id where a.ride_id=' + ride_id
+        qs1 = Rides.objects.raw(sql1 + sql2 + sql3)
+        data['sharer_list'] = qs1
+        return data
+
     def get_queryset(self):
         user_pk = str(self.request.user.pk)
         ride_id = re.match('/myshareinfo/\d+',self.request.META['PATH_INFO']).group()[13:]

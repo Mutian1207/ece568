@@ -50,6 +50,7 @@
                 <div class="card border-success" style="width: 20rem;">
                     <div style="width: 20rem;">
                         {% for object in share_ride_list %}
+                        {% if object.status != "cp" %}
                         <div class="card-body bg-white">
                             <h5 class="card-title">ShareRide ID: {{ object.ride_id }}</h5>
                             <p class="card-text">
@@ -70,6 +71,7 @@
                             {% endif %}
                             <a href="{%url 'basicapp:sharerideinfo' pk=object.ride_id %}" class="card-link">details</a>
                         </div>
+                        {% endif %}
                         {% endfor %}
                     </div>
                 </div>
