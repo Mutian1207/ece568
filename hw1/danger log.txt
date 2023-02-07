@@ -1,0 +1,10 @@
+2023-1-28
+1.We did not check the complexity of the user's password when registering. We were worried that the user might use some simple combination as their password, so we checked the complexity of the password when registering.
+2023-1-29
+2. We used get method to pass ride and user parameters, but this method would cause the user's information to be displayed in the url, then we chose to pass the information by post method only.
+2023-1-30
+3. When performing information display (either the information of the user as owner of ride or the information of the user as sharer or driver), we had no choice but to use raw sql statements to add, delete and check due to the need to perform complex join operations and filter operations. Later, we found that there might be a security problem like sql injection, so we used the raw queries API provided by django to achieve back-end data lookup. But we are still worried about the possible existence of such security vulnerabilities as sql injection.
+2023-1-31
+4.Attackers don't need to use browsers/HTML to submit web requests. This means that we cannot rely on our HTML to validate user inputs. Form data received by the server is validated by ensuring that the requests modified by the forms belong to the user who owns the requests.
+2023-1-31
+5.We check the content of each request ride before they are posted. Illegal rides are prevented to be posted and the user receives a corresponding error message.
