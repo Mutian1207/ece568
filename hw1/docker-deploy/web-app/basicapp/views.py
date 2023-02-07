@@ -49,20 +49,11 @@ class UserOpenRidesView(ListView):
         data['is_driver'] = Users.objects.get(id=self.request.user.pk).is_driver
         if(Users.objects.get(id=self.request.user.pk).is_driver):
             selectitems = 'SELECT * FROM basicapp_users a'
-            jointable1 = ' inner join basicapp_rides b on b.driver_acc_id=' + user_pk + 'where a.id=' + user_pk
+            jointable1 = ' inner join basicapp_rides b on b.driver_acc_id=' + user_pk + ' where a.id=' + user_pk
             res = Rides.objects.raw(selectitems + jointable1)
-            '''
-            print(len(res))
-            share_list = {}
-            for item in res:
-                #print(item.ride_id)
-                #print(Sharers.objects.filter(share_id=item.ride_id))
-                ride_id = item.email
-                share_list[ride_id] = Sharers.objects.filter(share_id=item.ride_id)
-                print(share_list)
-            '''
+           
             data['drive_ride_list'] = res
-            print(len(res))
+           
             #data['sharers_list'] = share_list
         return data
 
@@ -126,7 +117,7 @@ class ToDriveView(ListView):
             counter[share.share_id] +=share.share_party_num
         
         max_pass_num = self.request.user.max_pass_num if self.request.user.max_pass_num else 0
-        print(max_pass_num)
+      
         vehic_type = self.request.user.vehic_type
         context['open_ride_list'] = list(filter(lambda key: (counter[key]<= max_pass_num and 
                                                             #total party number limit
@@ -227,17 +218,15 @@ class RideDetailView(ListView):
     context_object_name = "ride_list"
     template_name = "rideinfo.html"
 
-    def get_queryset(self):
+    def get_queryset(self,**kwargs):
         user_pk = str(self.request.user.pk)
-        ride_id = re.match('/myrideinfo/\d+',self.request.META['PATH_INFO']).group()[12:]
-        print(user_pk)
-        print(ride_id)
+        #ride_id = re.match('/myrideinfo/\d+',self.request.META['PATH_INFO']).group()[12:]
+        ride_id = self.kwargs["pk"]
         sql1 = 'SELECT * FROM basicapp_rides a'
         sql2 = ' left join basicapp_sharers b on a.ride_id=b.share_id_id and a.owner_id=' + user_pk #+ 'where a.ride_id=' + ride_id
         sql3 = ' left join basicapp_users c on c.id=b.sharer_id_id where a.ride_id=' + ride_id
         qs1 = Rides.objects.raw(sql1 + sql2 + sql3)
-        print('length: '+ str(len(qs1)))
-        print(qs1[0].owner)
+      
         return qs1
 
 class ShareDetailView(ListView):
@@ -248,7 +237,8 @@ class ShareDetailView(ListView):
     def get_context_data(self,**kwargs):
         data = super().get_context_data(**kwargs)
         user_pk = str(self.request.user.pk)
-        ride_id = re.match('/myshareinfo/\d+',self.request.META['PATH_INFO']).group()[13:]
+        #ride_id = re.match('/myshareinfo/\d+',self.request.META['PATH_INFO']).group()[13:]
+        ride_id = self.kwargs["pk"]
         sql1 = 'SELECT * FROM basicapp_rides a'
         sql2 = ' left join basicapp_sharers b on b.share_id_id=a.ride_id and b.sharer_id_id!=' + user_pk #+ 'where a.ride_id=' + ride_id
         sql3 = ' left join basicapp_users c on c.id=b.sharer_id_id where a.ride_id=' + ride_id
@@ -256,9 +246,10 @@ class ShareDetailView(ListView):
         data['sharer_list'] = qs1
         return data
 
-    def get_queryset(self):
+    def get_queryset(self, **kwargs):
         user_pk = str(self.request.user.pk)
-        ride_id = re.match('/myshareinfo/\d+',self.request.META['PATH_INFO']).group()[13:]
+        #ride_id = re.match('/myshareinfo/\d+',self.request.META['PATH_INFO']).group()[13:]
+        ride_id = self.kwargs["pk"]
         sql1 = 'SELECT * FROM basicapp_rides a'
         sql2 = ' left join basicapp_sharers b on b.share_id_id=a.ride_id and b.sharer_id_id=' + user_pk + ' where b.share_id_id=' + ride_id
         qs1 = Rides.objects.raw(sql1 + sql2)
@@ -282,17 +273,15 @@ class DriveDetailView(ListView):
     context_object_name = "ride_list"
     template_name = "driveinfo.html"
 
-    def get_queryset(self):
+    def get_queryset(self, **kwargs):
         user_pk = str(self.request.user.pk)
-        ride_id = re.match('/mydriveinfo/\d+',self.request.META['PATH_INFO']).group()[13:]
-        print(user_pk)
-        print(ride_id)
+        #ride_id = re.match('/mydriveinfo/\d+',self.request.META['PATH_INFO']).group()[13:]
+        ride_id = self.kwargs["pk"]
         sql1 = 'SELECT * FROM basicapp_rides a'
         sql2 = ' left join basicapp_sharers b on a.ride_id=b.share_id_id and a.driver_acc_id=' + user_pk #+ 'where a.ride_id=' + ride_id
         sql3 = ' left join basicapp_users c on c.id=b.sharer_id_id where a.ride_id=' + ride_id
         qs1 = Rides.objects.raw(sql1 + sql2 + sql3)
-        print('length: '+ str(len(qs1)))
-        print(qs1[0].share_id_id)
+       
         return qs1
 
 class CompleteDriveView(View):
